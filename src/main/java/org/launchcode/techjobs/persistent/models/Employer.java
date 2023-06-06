@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 public class Employer extends AbstractEntity {
     @OneToMany
-    @JoinColumn(name="employerId")
+    @JoinColumn(name="employer_id")
     private final List<Job> jobs = new ArrayList<>();
 
     @NotNull(message="Must have a location.")

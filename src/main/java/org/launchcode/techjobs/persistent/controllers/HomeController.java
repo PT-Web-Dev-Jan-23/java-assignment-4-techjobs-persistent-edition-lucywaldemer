@@ -1,7 +1,7 @@
 package org.launchcode.techjobs.persistent.controllers;
 
-import org.launchcode.techjobs.persistent.models.Job;
-import org.launchcode.techjobs.persistent.models.Skill;
+import org.launchcode.techjobs.persistent.models.*;
+import org.launchcode.techjobs.persistent.models.data.EmployerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +9,9 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by LaunchCode
@@ -18,7 +20,7 @@ import java.util.List;
 public class HomeController {
 
     @Autowired
-    public String employerRepository;
+    private EmployerRepository employerRepository;
 
     @RequestMapping("")
     public String index(Model model) {
@@ -46,13 +48,16 @@ public class HomeController {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Job");
-            return "add";
-        } else {
-            model.addAttribute("name", employerId);
-        }
 
-        return "redirect:";
+        return "add";
+        }
+        Optional<Employer> result = employerRepository.findById(employerId);
+        if (result.isPresent()) {
+        Employer employer = result.get();
+        newJob.setEmployer(employer);
     }
+        return "redirect:";
+        }
 
     @GetMapping("view/{jobId}")
     public String displayViewJob(Model model, @PathVariable int jobId) {
