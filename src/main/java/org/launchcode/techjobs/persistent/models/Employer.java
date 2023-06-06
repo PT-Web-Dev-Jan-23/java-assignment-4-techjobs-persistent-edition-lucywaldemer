@@ -22,6 +22,9 @@ public class Employer extends AbstractEntity {
     @Size(max=100)
     public String location;
 
+    public Employer(String location){
+        this.location = location;
+    }
     public Employer() {
     }
 
