@@ -37,10 +37,11 @@ public class SkillController {
             return "skill/add";
         }
         skillRepository.save(newSkill);
-        return "redirect:";
+        model.addAttribute("skill", skillRepository.findAll());
+        return "skill/add";
     }
 
-    @GetMapping("view/{employerId}")
+    @GetMapping("view/{skillId}")
     public String displayViewSkill(Model model, @PathVariable int employerId) {
 
         Optional optSkill = skillRepository.findById(employerId);
